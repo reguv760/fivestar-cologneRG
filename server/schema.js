@@ -20,8 +20,6 @@ exports.typeDefs = `
     getAllColognes: [Cologne]
   }
 
-
-
   type Mutation {
     addCologne(scentName: String!, scentPrice: Int, description: String, username: String): Cologne
   }
