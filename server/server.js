@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose'); // add this
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 
 //find variables.env file by requiring 'dotenv' package
 require('dotenv').config({ path: 'variables.env' }); // add this
@@ -11,18 +11,19 @@ const User = require('./models/User');
 
 const PORT = process.env.PORT || 4444;
 
-// bring in GraphQL middleware
-const { graphiqlExpress, graphqlExpress } = require('apollo-server-express');
-const { makeExecutableSchema } = require('graphql-tools');
+// bring in graphql middleware
+// const { graphiqlExpress, graphqlExpress } = require('apollo-server-express');
+// const { makeExecutableSchema } = require('graphql-tools');
+const { ApolloServer } = require('apollo-server-express');
 
 // graphql based on external files
 const { typeDefs } = require('./schema');
 const { resolvers } = require('./resolvers');
 
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
+// const schema = makeExecutableSchema({
+//   typeDefs,
+//   resolvers,
+// });
 
 //begin DB connection:::
 mongoose
@@ -41,21 +42,30 @@ mongoose
 // initialize your application
 const app = express();
 
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+// create apollo server
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: ({ req }) => ({ Cologne, User }),
+});
+
+server.applyMiddleware({ app });
+
+//app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 // Connect schemas with GraphQL
-app.use(
-  '/graphql',
-  bodyParser.json(), // added after including body-parser;
-  graphqlExpress({
-    schema,
-    context: {
-      // pass in mongoose models
-      Cologne,
-      User,
-    },
-  })
-);
+// app.use(
+//   '/graphql',
+//   bodyParser.json(), // added after including body-parser;
+//   graphqlExpress({
+//     schema,
+//     context: {
+//       // pass in mongoose models
+//       Cologne,
+//       User,
+//     },
+//   })
+// );
 
 app.listen(PORT, () => {
   console.log(`Server listening on PORT ${PORT}`);

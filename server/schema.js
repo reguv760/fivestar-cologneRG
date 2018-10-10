@@ -1,11 +1,10 @@
 exports.typeDefs = `
   type Cologne {
     _id: ID,
-    firstName: String!
-    lastName: String!
-    dateOfBirth: String
-    description: String
+    scentName: String!
+    scentPrice: Int
     createdDate: String
+    description: String
     likes: Int
     username: String
   }
