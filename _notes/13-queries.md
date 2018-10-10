@@ -1,5 +1,6 @@
 # Create First Query
-* When we added a document using a mutation a new `_id` field was created so we need to add that to our schema
+
+- When we added a document using a mutation a new `_id` field was created so we need to add that to our schema
 
 `schema.js`
 
@@ -28,8 +29,8 @@ exports.typeDefs = `
 // MORE CODE
 ```
 
-* We add `ID` as the type
-* We don't need a `!` as it will automatically be added
+- We add `ID` as the type
+- We don't need a `!` as it will automatically be added
 
 1. `http://localhost:4444/graphiql`
 2. Open Documentation Explorer
@@ -38,6 +39,7 @@ exports.typeDefs = `
 5. You now see our new field of `_id: ID`
 
 ## Check your Query
+
 `schema.js`
 
 ```
@@ -51,7 +53,8 @@ type Query {
 ```
 
 ## Open your resolvers
-* You will see this:
+
+- You will see this:
 
 `resolvers.js`
 
@@ -64,7 +67,7 @@ exports.resolvers = {
 // MORE CODE
 ```
 
-* Make these modifications
+- Make these modifications
 
 `resolvers.js`
 
@@ -80,7 +83,7 @@ exports.resolvers = {
   // MORE CODE
 ```
 
-* shortcut is:
+- shortcut is:
 
 ```
 exports.resolvers = {
@@ -103,9 +106,9 @@ exports.resolvers = {
 }
 ```
 
-* Click `play` button
-* You will see output from that query
-* You could add a field like:
+- Click `play` button
+- You will see output from that query
+- You could add a field like:
 
 ```
 {
@@ -118,5 +121,22 @@ exports.resolvers = {
 }
 ```
 
-* And that will output `createdDate`
-* Great way to see what data you are getting
+- And that will output `createdDate`
+- Great way to see what data you are getting
+
+#### GIT CLEAN-UP
+
+::: git -A
+git commit -m "message"
+git push origin <branch>
+
+> > > merge branch to master
+
+git checkout master
+git fetch
+git diff origin origin/master
+
+git pull origin master
+
+:::DELETE BRANCH
+git branch -D <branch>
