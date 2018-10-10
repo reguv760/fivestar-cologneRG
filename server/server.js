@@ -1,17 +1,15 @@
-const express = require("express");
+const express = require('express');
 const mongoose = require('mongoose'); // add this
 const bodyParser = require('body-parser');
 
-
 //find variables.env file by requiring 'dotenv' package
-require('dotenv').config({ path: 'variables.env'}); // add this
+require('dotenv').config({ path: 'variables.env' }); // add this
 
 // models
 const Cologne = require('./models/Cologne');
 const User = require('./models/User');
 
 const PORT = process.env.PORT || 4444;
-
 
 // bring in GraphQL middleware
 const { graphiqlExpress, graphqlExpress } = require('apollo-server-express');
@@ -26,7 +24,6 @@ const schema = makeExecutableSchema({
   resolvers,
 });
 
-
 //begin DB connection:::
 mongoose
   .connect(
@@ -40,7 +37,6 @@ mongoose
     console.log('Error on start: ' + err.stack);
     process.exit(1);
   });
-
 
 // initialize your application
 const app = express();
@@ -60,7 +56,6 @@ app.use(
     },
   })
 );
-
 
 app.listen(PORT, () => {
   console.log(`Server listening on PORT ${PORT}`);

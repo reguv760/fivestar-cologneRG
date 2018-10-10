@@ -24,6 +24,6 @@ exports.typeDefs = `
   }
 
   type Mutation {
-    addCologne(firstName: String!, lastName: String!, description: String, username: String  ): Cologne
+    addCologne(scentName: String!, scentPrice: Int, description: String, username: String): Cologne
   }
 `;
