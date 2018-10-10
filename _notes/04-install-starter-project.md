@@ -1,36 +1,47 @@
 # Install starter for project
 
-
 ### Dev Dependencies
-* `$ npm i nodemon eslint babel-eslint eslint-plugin-jsx-a11y eslint-plugin-flowtype eslint-plugin-import eslint-config-react-app eslint-plugin-prettier -D`
-* Install in project root folder
+
+- `$ npm i nodemon eslint babel-eslint eslint-plugin-jsx-a11y eslint-plugin-flowtype eslint-plugin-import eslint-config-react-app eslint-plugin-prettier -D`
+- Install in project root folder
 
 ### Dependencies
-* apollo-server-express
-* bcrypt
-* body-parser
-* cors
-* dotenv
-* express
-* graphql
-* graphql-tools
-* jsonwebtoken
-* mongoose
+
+- apollo-server-express
+- bcrypt
+- body-parser
+- cors
+- dotenv
+- express
+- graphql
+- graphql-tools
+- jsonwebtoken
+- mongoose
 
 ## Alternative to express
-* Koa is very popular
-* [koa website](https://koajs.com/)
+
+- Koa is very popular
+- [koa website](https://koajs.com/)
 
 ### Start from scratch
-* `$ npm i apollo-server-express bcrypt body-parser cors dotenv express graphql graphql-tools jsonwebtoken mongoose`
 
-or 
+- `$ npm i apollo-server-express bcrypt body-parser cors dotenv express graphql graphql-tools jsonwebtoken mongoose`
 
-* `$ npm i apollo-server-express bcryptjs body-parser cors dotenv express graphql graphql-tools jsonwebtoken mongoose`
+or
 
-use above command bcrypt error; bcryptjs used instead when node-gyp error occurs
+visit: https://github.com/nodejs/node-gyp#installation
+
+If node pre-gyp or node gyp error occurs, it's because Dev environment
+is missing a few things.
+
+Windows installation:
+Try option 1
+if that fails, then Option 2. This is a result of missing Visual Studio Build Tools and/or Python.exe (v2.7)
+
+install missing files then run apollo... installation code
 
 ## Make your file a git repo
+
 `$ git init`
 
 ### Add `.gitignore`
@@ -106,17 +117,21 @@ typings/
 ```
 
 ## Add to staging with git
+
 `$ git add -A`
 
 ## Commit with git
+
 `$ git commit -m 'initialize repo`
 
 ## Use hub to create remote github repo
+
 `$ hub create`
 
 ## Push to github
+
 `$ git push origin master`
 
 ## Add another commit to github
-* Do the same steps as before
 
+- Do the same steps as before
