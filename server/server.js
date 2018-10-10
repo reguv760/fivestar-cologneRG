@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose'); // add this
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 
 //find variables.env file by requiring 'dotenv' package
 require('dotenv').config({ path: 'variables.env' }); // add this
