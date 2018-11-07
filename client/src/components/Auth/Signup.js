@@ -4,12 +4,25 @@ import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import { SIGNUP_USER_MUTATION } from "../../queries";
 
+// custom component:::
+import Error from "../Error";
+
+const initState = {
+  username: "",
+  email: "",
+  password: "",
+  passwordConfirmation: ""
+};
+
 class Signup extends Component {
   state = {
-    username: "",
-    email: "",
-    password: "",
-    passwordConfirmation: ""
+    ...initState
+  };
+
+  clearForm = () => {
+    this.setState({
+      ...initState
+    });
   };
 
   handleChange = event => {
@@ -27,9 +40,19 @@ class Signup extends Component {
   handleSubmit = (event, signupUser) => {
     event.preventDefault();
     signupUser().then(data => {
-      console.log(data);
+      // console.log(data);
+      this.clearForm();
     });
     // console.log('form submitted ' + signupUser);
+  };
+
+  validateForm = () => {
+    const { username, email, password, passwordConfirmation } = this.state;
+
+    const isInvalid =
+      !username || !email || !password || password !== passwordConfirmation;
+
+    return isInvalid;
   };
 
   render() {
@@ -45,7 +68,7 @@ class Signup extends Component {
           {/* expression  + render props function */}
           {(signupUser, { data, loading, error }) => {
             if (loading) return <div>Loading...</div>;
-            if (error) return <div>Error {error.message}</div>;
+            // if (error) return <div>Error {error.message}</div>;
             console.log(data);
 
             return (
@@ -98,10 +121,16 @@ class Signup extends Component {
                   Confirm Password{" "}
                 </label>{" "}
                 <div>
-                  <button type="submit" className="button-primary">
+                  <button
+                    type="submit"
+                    className="button-primary"
+                    disabled={loading || this.validateForm()}
+                  >
                     {" "}
                     Signup
                   </button>
+
+                  {error && <Error errorMsg={error} />}
                 </div>
               </form>
             );
