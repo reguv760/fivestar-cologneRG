@@ -26,6 +26,9 @@ class Signup extends Component {
   // add to form button:::
   handleSubmit = (event, signupUser) => {
     event.preventDefault();
+    signupUser().then(data => {
+      console.log(data);
+    });
     // console.log('form submitted ' + signupUser);
   };
 
@@ -35,7 +38,10 @@ class Signup extends Component {
     return (
       <div className="App">
         <h2 className="App"> Signup </h2>
-        <Mutation mutation={SIGNUP_USER_MUTATION}>
+        <Mutation
+          variables={{ username, email, password }}
+          mutation={SIGNUP_USER_MUTATION}
+        >
           {/* expression  + render props function */}
           {(signupUser, { data, loading, error }) => {
             if (loading) return <div>Loading...</div>;
