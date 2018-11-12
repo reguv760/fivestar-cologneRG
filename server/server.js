@@ -1,24 +1,24 @@
-const express = require("express");
-const mongoose = require("mongoose"); // add this
-//const bodyParser = require('body-parser');
+const express = require('express');
+const mongoose = require('mongoose'); // add this
+// const bodyParser = require('body-parser');
 
 //find variables.env file by requiring 'dotenv' package
-require("dotenv").config({ path: "variables.env" }); // add this
+require('dotenv').config({ path: 'variables.env' }); // add this
 
 // models
-const Cologne = require("./models/Cologne");
-const User = require("./models/User");
+const Cologne = require('./models/Cologne');
+const User = require('./models/User');
 
 const PORT = process.env.PORT || 4444;
 
 // bring in graphql middleware
 // const { graphiqlExpress, graphqlExpress } = require('apollo-server-express');
 // const { makeExecutableSchema } = require('graphql-tools');
-const { ApolloServer } = require("apollo-server-express");
+const { ApolloServer } = require('apollo-server-express');
 
 // graphql based on external files
-const { typeDefs } = require("./schema");
-const { resolvers } = require("./resolvers");
+const { typeDefs } = require('./schema');
+const { resolvers } = require('./resolvers');
 
 // const schema = makeExecutableSchema({
 //   typeDefs,
@@ -32,26 +32,33 @@ mongoose
     { useNewUrlParser: true }
   )
   .then(() => {
-    console.log("DB connected");
+    console.log('DB connected');
   })
   .catch(err => {
-    console.log("Error on start: " + err.stack);
+    console.log('Error on start: ' + err.stack);
     process.exit(1);
   });
 
 // initialize your application
 const app = express();
 
+// jwt authentication middleware:::
+app.use(async (req, res, next) => {
+  const token = req.headers.authorization;
+  console.log(token);
+  next();
+});
+
 // create apollo server
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => ({ Cologne, User })
+  context: ({ req }) => ({ Cologne, User }),
 });
 
 server.applyMiddleware({ app });
 
-//app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+// app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 // Connect schemas with GraphQL
 // app.use(

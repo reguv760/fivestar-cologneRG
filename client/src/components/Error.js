@@ -1,16 +1,7 @@
-import React, { Component } from "react";
+import React from 'react';
 
-import PropTypes from "prop-types";
+const Error = ({ errorMsg }) => {
+  return <p>{errorMsg.message}</p>;
+};
 
-class Error extends Component {
-  static propTypes = {
-    error: PropTypes.object.isRequired
-  };
-
-  render() {
-    const { error } = this.props;
-
-    return <p> {error.message} </p>;
-  }
-}
 export default Error;

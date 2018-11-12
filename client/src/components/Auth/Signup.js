@@ -1,27 +1,27 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 // graphql mutation:::
-import { Mutation } from "react-apollo";
-import { SIGNUP_USER_MUTATION } from "../../queries";
+import { Mutation } from 'react-apollo';
+import { SIGNUP_USER_MUTATION } from '../../queries';
 
 // custom component:::
-import Error from "../Error";
+import Error from '../Error';
 
 const initState = {
-  username: "",
-  email: "",
-  password: "",
-  passwordConfirmation: ""
+  username: '',
+  email: '',
+  password: '',
+  passwordConfirmation: '',
 };
 
 class Signup extends Component {
   state = {
-    ...initState
+    ...initState,
   };
 
   clearForm = () => {
     this.setState({
-      ...initState
+      ...initState,
     });
   };
 
@@ -32,18 +32,21 @@ class Signup extends Component {
     // declare state variables to init:::
     // /modify state variables using setState:::
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
   // add to form button:::
   handleSubmit = (event, signupUser) => {
     event.preventDefault();
-    signupUser().then(data => {
-      // console.log(data);
-      this.clearForm();
+    // call our signupUser function
+    // it is a promise so we can use `then()`
+    // within `then()` we get our return `data`
+    signupUser().then(({ data: { signupUser } }) => {
+      console.log(signupUser);
+      localStorage.setItem('token', signupUser.token);
+      this.clearState();
     });
-    // console.log('form submitted ' + signupUser);
   };
 
   validateForm = () => {
@@ -85,8 +88,8 @@ class Signup extends Component {
                     onChange={this.handleChange}
                     value={username}
                   />
-                  Username{" "}
-                </label>{" "}
+                  Username
+                </label>
                 <label htmlFor="email">
                   <input
                     type="email"
@@ -96,8 +99,8 @@ class Signup extends Component {
                     onChange={this.handleChange}
                     value={email}
                   />
-                  Email{" "}
-                </label>{" "}
+                  Email
+                </label>
                 <label htmlFor="password">
                   <input
                     type="password"
@@ -107,8 +110,8 @@ class Signup extends Component {
                     onChange={this.handleChange}
                     value={password}
                   />
-                  Password{" "}
-                </label>{" "}
+                  Password
+                </label>
                 <label htmlFor="passwordConfirmation">
                   <input
                     type="password"
@@ -118,15 +121,14 @@ class Signup extends Component {
                     onChange={this.handleChange}
                     value={passwordConfirmation}
                   />
-                  Confirm Password{" "}
-                </label>{" "}
+                  Confirm Password
+                </label>
                 <div>
                   <button
                     type="submit"
                     className="button-primary"
                     disabled={loading || this.validateForm()}
                   >
-                    {" "}
                     Signup
                   </button>
 
