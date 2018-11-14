@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose'); // add this
 // const bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
 
 // find variables.env file by requiring 'dotenv' package
 require('dotenv').config({ path: 'variables.env' }); // add this
@@ -46,6 +47,16 @@ const app = express();
 app.use(async (req, res, next) => {
   const token = req.headers.authorization;
   // console.log(req.headers.authorization);
+  // console.log(typeof token);
+  if (token !== 'null' && token !== '' && token !== undefined) {
+    try {
+      // add currentuser to the request object
+      req.currentUser = await jwt.verify(token, process.env.SECRET);
+      // console.log(req.currentUser);
+    } catch (err) {
+      console.error(err);
+    }
+  }
   next(); // important function for nextJS; this calls the next function AFTER token
 });
 
