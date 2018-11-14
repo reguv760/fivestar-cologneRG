@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
@@ -28,7 +28,7 @@ const UserSchema = new Schema({
   },
 });
 
-//created salt + hash password:::
+// created salt + hash password:::
 UserSchema.pre('save', function(next) {
   if (!this.isModified('password')) {
     return next();

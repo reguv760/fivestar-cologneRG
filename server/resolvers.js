@@ -21,6 +21,23 @@ exports.resolvers = {
       const allColognes = await Cologne.find();
       return allColognes;
     },
+    getCurrentUser: async (root, args, { currentUser, User }) => {
+      // check if current user is logged in
+      if (!currentUser) {
+        return null;
+      }
+
+      // user IS logged in, grab info
+      // await function from mongoose calls findOne() to find currentUser.userName
+      const user = await User.findOne({
+        username: currentUser.username,
+      }).populate({
+        path: 'favorites',
+        model: 'Cologne', // make sure this is singular
+      });
+
+      return user;
+    },
   },
 
   Mutation: {

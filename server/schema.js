@@ -20,6 +20,8 @@ exports.typeDefs = `
 
   type Query {
     getAllColognes: [Cologne]
+
+    getCurrentUser: User
   }
 
   type Token
