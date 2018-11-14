@@ -1,15 +1,28 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 // graphql mutation:::
-import { Mutation } from "react-apollo";
-import { SIGNUP_USER_MUTATION } from "../../queries";
+import { Mutation } from 'react-apollo';
+import { SIGNUP_USER_MUTATION } from '../../queries';
+
+// custom component:::
+import Error from '../Error';
+
+const initState = {
+  username: '',
+  email: '',
+  password: '',
+  passwordConfirmation: '',
+};
 
 class Signup extends Component {
   state = {
-    username: "",
-    email: "",
-    password: "",
-    passwordConfirmation: ""
+    ...initState,
+  };
+
+  clearForm = () => {
+    this.setState({
+      ...initState,
+    });
   };
 
   handleChange = event => {
@@ -19,17 +32,30 @@ class Signup extends Component {
     // declare state variables to init:::
     // /modify state variables using setState:::
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
   // add to form button:::
   handleSubmit = (event, signupUser) => {
     event.preventDefault();
-    signupUser().then(data => {
-      console.log(data);
+    // call our signupUser function
+    // it is a promise so we can use `then()`
+    // within `then()` we get our return `data`
+    signupUser().then(({ data: { signupUser } }) => {
+      console.log(signupUser);
+      localStorage.setItem('token', signupUser.token);
+      this.clearForm();
     });
-    // console.log('form submitted ' + signupUser);
+  };
+
+  validateForm = () => {
+    const { username, email, password, passwordConfirmation } = this.state;
+
+    const isInvalid =
+      !username || !email || !password || password !== passwordConfirmation;
+
+    return isInvalid;
   };
 
   render() {
@@ -45,7 +71,7 @@ class Signup extends Component {
           {/* expression  + render props function */}
           {(signupUser, { data, loading, error }) => {
             if (loading) return <div>Loading...</div>;
-            if (error) return <div>Error {error.message}</div>;
+            // if (error) return <div>Error {error.message}</div>;
             console.log(data);
 
             return (
@@ -62,8 +88,8 @@ class Signup extends Component {
                     onChange={this.handleChange}
                     value={username}
                   />
-                  Username{" "}
-                </label>{" "}
+                  Username
+                </label>
                 <label htmlFor="email">
                   <input
                     type="email"
@@ -73,8 +99,8 @@ class Signup extends Component {
                     onChange={this.handleChange}
                     value={email}
                   />
-                  Email{" "}
-                </label>{" "}
+                  Email
+                </label>
                 <label htmlFor="password">
                   <input
                     type="password"
@@ -84,8 +110,8 @@ class Signup extends Component {
                     onChange={this.handleChange}
                     value={password}
                   />
-                  Password{" "}
-                </label>{" "}
+                  Password
+                </label>
                 <label htmlFor="passwordConfirmation">
                   <input
                     type="password"
@@ -95,13 +121,18 @@ class Signup extends Component {
                     onChange={this.handleChange}
                     value={passwordConfirmation}
                   />
-                  Confirm Password{" "}
-                </label>{" "}
+                  Confirm Password
+                </label>
                 <div>
-                  <button type="submit" className="button-primary">
-                    {" "}
+                  <button
+                    type="submit"
+                    className="button-primary"
+                    disabled={loading || this.validateForm()}
+                  >
                     Signup
                   </button>
+
+                  {error && <Error errorMsg={error} />}
                 </div>
               </form>
             );

@@ -118,6 +118,7 @@
     ]
   },
   "plugins": [
+    // "html",
     "prettier"
   ]
 }

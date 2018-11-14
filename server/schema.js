@@ -31,5 +31,7 @@ exports.typeDefs = `
     addCologne(scentName: String!, scentPrice: Int, description: String, username: String): Cologne
 
     signupUser(username: String!, email: String!, password: String!): Token
+
+    signinUser(username: String!, password: String!): Token
   }
 `;
