@@ -2,19 +2,19 @@ const express = require('express');
 const mongoose = require('mongoose'); // add this
 // const bodyParser = require('body-parser');
 
-//find variables.env file by requiring 'dotenv' package
+// find variables.env file by requiring 'dotenv' package
 require('dotenv').config({ path: 'variables.env' }); // add this
+
+// bring in graphql middleware
+// const { graphiqlExpress, graphqlExpress } = require('apollo-server-express');
+// const { makeExecutableSchema } = require('graphql-tools');
+const { ApolloServer } = require('apollo-server-express');
 
 // models
 const Cologne = require('./models/Cologne');
 const User = require('./models/User');
 
 const PORT = process.env.PORT || 4444;
-
-// bring in graphql middleware
-// const { graphiqlExpress, graphqlExpress } = require('apollo-server-express');
-// const { makeExecutableSchema } = require('graphql-tools');
-const { ApolloServer } = require('apollo-server-express');
 
 // graphql based on external files
 const { typeDefs } = require('./schema');
@@ -45,8 +45,8 @@ const app = express();
 // jwt authentication middleware:::
 app.use(async (req, res, next) => {
   const token = req.headers.authorization;
-  console.log(token);
-  next();
+  // console.log(req.headers.authorization);
+  next(); // important function for nextJS; this calls the next function AFTER token
 });
 
 // create apollo server

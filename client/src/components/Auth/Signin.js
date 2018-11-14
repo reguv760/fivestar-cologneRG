@@ -42,6 +42,7 @@ class Signin extends Component {
     signinUser().then(({ data: { signinUser } }) => {
       // console.log(data.signinUser.token);
       console.log(signinUser);
+      // research localStorage, sessions, cookies
       localStorage.setItem('token', signinUser.token);
       this.clearForm();
     });

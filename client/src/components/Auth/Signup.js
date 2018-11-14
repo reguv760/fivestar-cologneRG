@@ -45,7 +45,7 @@ class Signup extends Component {
     signupUser().then(({ data: { signupUser } }) => {
       console.log(signupUser);
       localStorage.setItem('token', signupUser.token);
-      this.clearState();
+      this.clearForm();
     });
   };
 
