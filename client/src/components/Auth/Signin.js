@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // graphql mutation:::
 import { Mutation } from 'react-apollo';
@@ -13,6 +15,10 @@ const initState = {
 };
 
 class Signin extends Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+  };
+
   state = {
     ...initState,
   };
@@ -38,6 +44,7 @@ class Signin extends Component {
   handleSubmit = (event, signinUser) => {
     event.preventDefault();
 
+    const { history } = this.props;
     // call sign in function!
     signinUser().then(({ data: { signinUser } }) => {
       // console.log(data.signinUser.token);
@@ -45,6 +52,7 @@ class Signin extends Component {
       // research localStorage, sessions, cookies
       localStorage.setItem('token', signinUser.token);
       this.clearForm();
+      history.push('/');
     });
     // console.log('form submitted ' + signupUser);
   };
@@ -120,4 +128,4 @@ class Signin extends Component {
   }
 }
 
-export default Signin;
+export default withRouter(Signin);

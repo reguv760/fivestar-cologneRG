@@ -7,6 +7,8 @@ import {
   Redirect,
 } from 'react-router-dom';
 
+import PropTypes from 'prop-types';
+
 // apollo client:::
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
@@ -49,19 +51,30 @@ const client = new ApolloClient({
 });
 
 // stateless functional component::::
-const Root = () => (
+const Root = ({ refetch }) => (
   <Router>
     <div id="wrapper">
       <Switch>
         <Route path="/" exact component={App} />
-        <Route path="/signin" component={Signin} />
-        <Route path="/signup" component={Signup} />
+        <Route path="/signin" render={() => <Signin refetch={refetch} />} />
+        <Route path="/signup" render={() => <Signup refetch={refetch} />} />
         <Route path="/styleguide" component={StyleGuide} />
         <Redirect to="/" />
       </Switch>
     </div>
   </Router>
 );
+
+// stateless propType used by Root:::
+// { refetch } is based to Route and into signin + signup components:::
+
+Root.propTypes = {
+  refetch: PropTypes.func,
+};
+
+Root.defaultProps = {
+  refetch: undefined,
+};
 
 const RootWithSession = withSession(Root);
 

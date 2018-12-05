@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-// HW:::
+// HW for 12/5/18:::
 // create About page
 // Create nav component
 // Create Header + Footer component
 // Stylish Signin page using StyleGuide.js
+
 // graphql
 import { Mutation } from 'react-apollo';
 import { SIGNUP_USER_MUTATION } from '../../queries';
@@ -20,6 +23,10 @@ const initialState = {
 };
 
 class Signup extends Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+  };
+
   state = {
     ...initialState,
   };
@@ -40,6 +47,8 @@ class Signup extends Component {
 
   handleSubmit = (event, signupUser) => {
     event.preventDefault();
+
+    const { history } = this.props;
     // call our signupUser function
     // it is a promise so we can use `then()`
     // within `then()` we get our return `data`
@@ -47,6 +56,7 @@ class Signup extends Component {
       // console.log(signupUser);
       localStorage.setItem('token', signupUser.token);
       this.clearState();
+      history.push('/');
     });
   };
 
@@ -147,8 +157,8 @@ class Signup extends Component {
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Voluptas rerum necessitatibus fuga ex sequi
                             incidunt repellat. Voluptates eum molestias iusto.
-                            Nulla ex accusantium animi saepe ullam deserunt
-                            voluptates in repellat.
+                            iusto. Nulla ex accusantium animi saepe ullam
+                            deserunt voluptates in repellat.
                           </span>
                           <span>
                             Necessitatibus fugiat nisi labore rem, molestiae
@@ -199,8 +209,8 @@ class Signup extends Component {
                           Accusantium quidem mollitia minus voluptas cupiditate.
                           Inventore aliquam ab totam labore quam natus, alias
                           autem vitae quia, quidem iure sit exercitationem
-                          eveniet adipisci esse soluta facilis voluptatem
-                          aliquid perspiciatis? Ipsum?
+                          exercitationem eveniet adipisci esse soluta facilis
+                          voluptatem aliquid perspiciatis? Ipsum?
                         </p>
                       </div>
                     </div>
@@ -218,4 +228,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default withRouter(Signup);
