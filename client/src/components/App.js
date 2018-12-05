@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-//styles
-import './App.scss';
-
 //graphql
 import { Query } from 'react-apollo';
 import { GET_ALL_COLOGNES } from './../queries';
